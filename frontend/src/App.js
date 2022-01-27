@@ -7,6 +7,7 @@ import { AppContext } from "./lib/contextLib";
 import { Auth } from "aws-amplify";
 import "./App.css";
 import Routes from "./Routes";
+import { onError } from "./lib/errorLib";
 
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -23,7 +24,7 @@ function App() {
       userHasAuthenticated(true);
     } catch (e) {
       if (e !== "No current user") {
-        alert(e);
+        onError(e);
       }
     }
 
