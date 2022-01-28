@@ -1,4 +1,5 @@
 const config = {
+  STRIPE_KEY: process.env.STRIPE_PUBLIC_KEY,
   MAX_ATTACHMENT_SIZE: 5000000,
   // Backend config
   s3: {
