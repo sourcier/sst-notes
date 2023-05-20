@@ -1,8 +1,8 @@
-import { Table, StackContext } from "sst/constructs";
+import { Table, Bucket, StackContext } from "sst/constructs";
 
 export function StorageStack({ stack }: StackContext) {
   // Create the DynamoDB table
-  const table = new Table(stack, "sst-notes", {
+  const table = new Table(stack, "notes", {
     fields: {
       userId: "string",
       noteId: "string",
@@ -10,7 +10,11 @@ export function StorageStack({ stack }: StackContext) {
     primaryIndex: { partitionKey: "userId", sortKey: "noteId" },
   });
 
+  // Create an S3 bucket
+  const bucket = new Bucket(stack, "uploads");
+
   return {
     table,
+    bucket,
   };
 }
