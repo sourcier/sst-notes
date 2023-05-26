@@ -2,13 +2,13 @@ import { Table } from "sst/node/table";
 import handler from "@sst-notes/core/handler";
 import dynamoDb from "@sst-notes/core/dynamodb";
 
-export const main = handler(async () => {
+export const main = handler(async (event) => {
   const params = {
     TableName: Table.Notes.tableName,
     // 'KeyConditionExpression' defines the condition for the query
     // - 'userId = :userId': only return items with matching 'userId'
     //   partition key
-    KeyConditionExpression: "userId = :userId",
+    ":userId": event.requestContext.authorizer.iam.cognitoIdentity.identityId,
     // 'ExpressionAttributeValues' defines the value in the condition
     // - ':userId': defines 'userId' to be the id of the author
     ExpressionAttributeValues: {
