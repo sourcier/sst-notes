@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
 
 import "./Login.css";
 import { useAppContext } from "../lib/contextLib";
@@ -10,6 +11,7 @@ export default function Login() {
   const { userHasAuthenticated } = useAppContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const nav = useNavigate();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -21,6 +23,7 @@ export default function Login() {
     try {
       await Auth.signIn(email, password);
       userHasAuthenticated(true);
+      nav("/");
     } catch (e) {
       alert(e.message);
     }
