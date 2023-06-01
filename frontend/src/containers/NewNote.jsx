@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import { API } from "aws-amplify";
+
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../lib/errorLib";
 import config from "../config";
@@ -33,6 +35,20 @@ export default function NewNote() {
     }
 
     setIsLoading(true);
+
+    try {
+      await createNote({ content });
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
+  }
+
+  function createNote(note) {
+    return API.post("notes", "/notes", {
+      body: note,
+    });
   }
 
   return (
