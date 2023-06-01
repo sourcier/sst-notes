@@ -7,6 +7,7 @@ import "./Notes.css";
 
 import { API, Storage } from "aws-amplify";
 import { onError } from "../lib/errorLib";
+import { s3Upload } from "../lib/awsLib";
 
 export default function Notes() {
   const file = useRef(null);
@@ -53,6 +54,12 @@ export default function Notes() {
     file.current = event.target.files[0];
   }
 
+  function saveNote(note) {
+    return API.put("notes", `/notes/${id}`, {
+      body: note,
+    });
+  }
+
   async function handleSubmit(event) {
     let attachment;
 
@@ -68,6 +75,21 @@ export default function Notes() {
     }
 
     setIsLoading(true);
+
+    try {
+      if (file.current) {
+        attachment = await s3Upload(file.current);
+      }
+
+      await saveNote({
+        content,
+        attachment: attachment || note.attachment,
+      });
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
   }
 
   async function handleDelete(event) {
