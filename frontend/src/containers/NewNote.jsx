@@ -7,6 +7,7 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../lib/errorLib";
 import config from "../config";
 import "./NewNote.css";
+import { s3Upload } from "../lib/awsLib";
 
 export default function NewNote() {
   const file = useRef(null);
@@ -37,7 +38,9 @@ export default function NewNote() {
     setIsLoading(true);
 
     try {
-      await createNote({ content });
+      const attachment = file.current ? await s3Upload(file.current) : null;
+
+      await createNote({ content, attachment });
       nav("/");
     } catch (e) {
       onError(e);
