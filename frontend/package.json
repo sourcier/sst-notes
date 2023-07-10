@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@sentry/browser": "^7.57.0",
     "sst": "^2.11.1"
   }
 }

@@ -1,4 +1,5 @@
 const config = {
+  REACT_APP_SENTRY_DSN: process.env.REACT_APP_SENTRY_DSN,
   MAX_ATTACHMENT_SIZE: 5000000,
   STRIPE_KEY: process.env.REACT_APP_STRIPE_PUBLIC_KEY,
   // Backend config

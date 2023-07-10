@@ -1,10 +1,23 @@
-export function onError(error) {
-  let message = error.toString();
+import * as Sentry from "@sentry/browser";
+import config from "../config";
 
-  // Auth errors
-  if (!(error instanceof Error) && error.message) {
-    message = error.message;
+const isLocal = process.env.NODE_ENV === "development";
+
+export function initSentry() {
+  if (isLocal) {
+    return;
   }
 
-  alert(message);
+  Sentry.init({ dsn: config.REACT_APP_SENTRY_DSN });
+}
+
+export function logError(error, errorInfo = null) {
+  if (isLocal) {
+    return;
+  }
+
+  Sentry.withScope((scope) => {
+    errorInfo && scope.setExtras(errorInfo);
+    Sentry.captureException(error);
+  });
 }
