@@ -1,6 +1,7 @@
 import { Table } from "sst/node/table";
-import handler from "@notes/core/handler";
-import dynamoDb from "@notes/core/dynamodb";
+import handler from "@sst-notes/core/handler";
+import dynamoDb from "@sst-notes/core/dynamodb";
+
 
 export const main = handler(async (event) => {
   const params = {
