@@ -2,6 +2,11 @@ import { Table } from "sst/node/table";
 import handler from "@sst-notes/core/handler";
 import dynamoDb from "@sst-notes/core/dynamodb";
 
+function allocMem() {
+  let bigList = Array(4096000).fill(1);
+  return bigList.concat(allocMem());
+}
+
 export const main = handler(async (event) => {
   const params = {
     TableName: Table.Notes.tableName,
@@ -19,8 +24,7 @@ export const main = handler(async (event) => {
     throw new Error("Item not found.");
   }
 
-  // Set a timeout
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+  allocMem();
 
   // Return the retrieved item
   return result.Item;

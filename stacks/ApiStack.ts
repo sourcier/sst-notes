@@ -9,6 +9,7 @@ export function ApiStack({ stack }: StackContext) {
     defaults: {
       authorizer: "iam",
       function: {
+        memorySize: 128,
         bind: [table],
         environment: {
           STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || "",
