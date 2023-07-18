@@ -2,10 +2,8 @@ import { Table } from "sst/node/table";
 import handler from "@sst-notes/core/handler";
 import dynamoDb from "@sst-notes/core/dynamodb";
 
-// Some faulty code
-dynamoDb.notExist();
-
-export const main = handler(async (event) => {
+// Wrong handler function name
+export const main2 = handler(async (event) => {
   const params = {
     TableName: Table.Notes.tableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -17,7 +15,7 @@ export const main = handler(async (event) => {
     },
   };
 
-  const result = await dynamoDb.get(params);
+  const result = await dynamoDbLib.call("get", params);
   if (!result.Item) {
     throw new Error("Item not found.");
   }
