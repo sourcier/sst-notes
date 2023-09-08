@@ -9,6 +9,7 @@ export function ApiStack({ stack }: StackContext) {
     defaults: {
       authorizer: "iam",
       function: {
+        runtime: "nodejs18.x",
         bind: [table],
         environment: {
           STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || "",

@@ -10,20 +10,20 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "test": "sst bind vitest run "
+    "test": "sst bind vitest run"
   },
   "devDependencies": {
-    "@tsconfig/node16": "^1.0.4",
-    "aws-cdk-lib": "2.72.1",
-    "constructs": "10.1.156",
-    "sst": "^2.8.27",
-    "typescript": "^5.0.4"
+    "aws-cdk-lib": "^2.95.0",
+    "constructs": "^10.2.70",
+    "sst": "^2.24.26",
+    "typescript": "^5.2.2"
   },
   "workspaces": [
     "packages/*"
   ],
   "dependencies": {
-    "aws-sdk": "^2.1381.0",
+    "@tsconfig/node18": "^18.2.1",
+    "aws-sdk": "^2.1453.0",
     "stripe": "^12.7.0",
     "uuid": "^9.0.0"
   }
