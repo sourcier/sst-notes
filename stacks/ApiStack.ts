@@ -1,7 +1,9 @@
-import { Api, use, StackContext } from "sst/constructs";
+import { Api, use, StackContext, Config } from "sst/constructs";
+
 import { StorageStack } from "./StorageStack";
 
 export function ApiStack({ stack }: StackContext) {
+  const STRIPE_SECRET_KEY = new Config.Secret(stack, "STRIPE_SECRET_KEY");
   const { table } = use(StorageStack);
 
   // Create the API
@@ -10,10 +12,7 @@ export function ApiStack({ stack }: StackContext) {
       authorizer: "iam",
       function: {
         runtime: "nodejs18.x",
-        bind: [table],
-        environment: {
-          STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || "",
-        },
+        bind: [table, STRIPE_SECRET_KEY],
       },
     },
     routes: {
