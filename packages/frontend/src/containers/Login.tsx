@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
@@ -11,6 +12,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { userHasAuthenticated } = useAppContext();
+  const nav = useNavigate();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -22,9 +24,8 @@ export default function Login() {
     try {
       await Auth.signIn(email, password);
       userHasAuthenticated(true);
+      nav("/");
     } catch (error) {
-      // Prints the full error
-      console.error(error);
       if (error instanceof Error) {
         alert(error.message);
       } else {
