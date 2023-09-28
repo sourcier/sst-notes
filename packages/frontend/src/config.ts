@@ -1,5 +1,5 @@
 const config = {
-  STRIPE_KEY: process.env.VITE_STRIPE_PUBLIC_KEY,
+  STRIPE_KEY: import.meta.env.VITE_STRIPE_PUBLIC_KEY,
   // Frontend config
   MAX_ATTACHMENT_SIZE: 5000000,
   // Backend config
