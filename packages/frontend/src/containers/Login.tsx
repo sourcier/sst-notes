@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
@@ -16,7 +15,6 @@ export default function Login() {
     password: "",
   });
   const { userHasAuthenticated } = useAppContext();
-  const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -31,7 +29,6 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-      nav("/");
     } catch (error) {
       onError(error);
       setIsLoading(false);
