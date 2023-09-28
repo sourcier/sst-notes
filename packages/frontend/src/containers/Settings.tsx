@@ -1,9 +1,13 @@
 import { useState } from "react";
-import config from "../config";
+import { loadStripe } from "@stripe/stripe-js";
 import { API } from "aws-amplify";
-import { onError } from "../lib/errorLib";
 import { useNavigate } from "react-router-dom";
+
+import config from "../config";
+import { onError } from "../lib/errorLib";
 import { BillingType } from "../types/billing";
+
+const stripePromise = loadStripe(config.STRIPE_KEY);
 
 export default function Settings() {
   const nav = useNavigate();
