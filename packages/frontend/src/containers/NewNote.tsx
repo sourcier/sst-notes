@@ -1,6 +1,10 @@
 import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import { API } from "aws-amplify";
+
+import { NoteType } from "../types/note";
+import { onError } from "../lib/errorLib";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewNote.css";
@@ -20,6 +24,12 @@ export default function NewNote() {
     file.current = event.currentTarget.files[0];
   }
 
+  function createNote(note: NoteType) {
+    return API.post("notes", "/notes", {
+      body: note,
+    });
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -33,6 +43,14 @@ export default function NewNote() {
     }
 
     setIsLoading(true);
+
+    try {
+      await createNote({ content });
+      nav("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
   }
 
   return (
