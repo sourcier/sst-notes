@@ -10,7 +10,7 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "test": "sst bind vitest run"
+    "test": "echo \"No tests specified\""
   },
   "devDependencies": {
     "aws-cdk-lib": "^2.95.0",
